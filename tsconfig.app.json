@@ -5,7 +5,12 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [],
-    "paths": {}
+    "baseUrl": "./",
+    "paths": {
+      "@app/pages/*": ["src/app/pages/*"],
+      "@app/pages": ["src/app/pages"],
+      "@app/routes": ["src/app/app.routes.const.ts"]
+    }
   },
   "include": [
     "src/**/*.ts"
