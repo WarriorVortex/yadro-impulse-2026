@@ -9,7 +9,9 @@
     "paths": {
       "@app/pages/*": ["src/app/pages/*"],
       "@app/pages": ["src/app/pages"],
-      "@app/routes": ["src/app/app.routes.const.ts"]
+      "@app/routes": ["src/app/app.routes.const.ts"],
+      "@app/models": ["src/app/core/models"],
+      "@app/pipes": ["src/app/shared/pipes"]
     }
   },
   "include": [
