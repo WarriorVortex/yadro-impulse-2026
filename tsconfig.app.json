@@ -7,11 +7,11 @@
     "types": [],
     "baseUrl": "./",
     "paths": {
-      "@app/pages/*": ["src/app/pages/*"],
       "@app/pages": ["src/app/pages"],
       "@app/routes": ["src/app/app.routes.const.ts"],
       "@app/models": ["src/app/core/models"],
-      "@app/pipes": ["src/app/shared/pipes"]
+      "@app/pipes": ["src/app/shared/pipes"],
+      "@app/utils": ["src/app/core/utils"]
     }
   },
   "include": [
