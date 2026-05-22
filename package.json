@@ -9,7 +9,8 @@
     "test": "ng test",
     "clean": "rm -rf node_modules package-lock.json",
     "lint": "ng lint",
-    "format": "prettier --write \"src/**/*.{ts,html,scss,json}\""
+    "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
+    "deploy": "ng build --configuration production && npx angular-cli-ghpages --dir=dist/browser"
   },
   "prettier": {
     "overrides": [
