@@ -1,9 +1,5 @@
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-
-export interface FloatValidatorParams {
-  min?: number;
-  max?: number;
-}
+import { FloatValidatorParams } from './float.validator.types';
 
 export function floatValidator(
   params: FloatValidatorParams = {},

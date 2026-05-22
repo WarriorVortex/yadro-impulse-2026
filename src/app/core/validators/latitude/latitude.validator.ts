@@ -1,4 +1,4 @@
-import { floatValidator } from './float.validator';
+import { floatValidator } from '../float';
 import { ValidatorFn } from '@angular/forms';
 
 export function latitudeValidator(): ValidatorFn {

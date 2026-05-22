@@ -1,5 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
-import { floatValidator } from './float.validator';
+import { floatValidator } from '../float';
 
 export function longitudeValidator(): ValidatorFn {
   return floatValidator({ min: -180, max: 180 }, 'invalidLongitude');
