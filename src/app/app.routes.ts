@@ -1,12 +1,16 @@
 import { Routes } from '@angular/router';
-import { UserDetailPageComponent, UserFormPageComponent, UserListPageComponent } from '@app/pages';
+import {
+  UserDetailPageComponent,
+  UserFormPageComponent,
+  UserListPageComponent,
+} from '@app/pages';
 import {
   USER_DETAIL_ROUTE,
   USER_EDIT_ROUTE,
   USER_LIST_ROUTE,
   USER_NEW_ROUTE,
   USER_ROUTE,
-} from "@app/routes";
+} from '@app/routes';
 
 export const routes: Routes = [
   { path: '', redirectTo: USER_ROUTE, pathMatch: 'full' },

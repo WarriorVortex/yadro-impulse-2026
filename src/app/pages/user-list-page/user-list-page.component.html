@@ -7,7 +7,12 @@
       class="user-list-page__header"
     >
       <ng-container nz-page-header-extra>
-        <a nz-button nzType="primary" [routerLink]="newUserRoute" [relativeTo]="null">
+        <a
+          nz-button
+          nzType="primary"
+          [routerLink]="newUserRoute"
+          [relativeTo]="null"
+        >
           <span nz-icon nzType="plus"></span>
           Add User
         </a>
@@ -16,7 +21,11 @@
 
     <div class="user-list-page__search">
       <nz-input-group nzPrefixIcon="search" nzSize="large">
-        <input nz-input placeholder="Search by name, email, username or company" [(ngModel)]="search" />
+        <input
+          nz-input
+          placeholder="Search by name, email, username or company"
+          [(ngModel)]="search"
+        />
       </nz-input-group>
     </div>
 
@@ -31,23 +40,29 @@
       class="user-list-page__table"
     >
       <thead>
-      <tr>
-        <th class="col-user">User</th>
-        <th class="col-email hidden-xs">Email</th>
-        <th class="col-city hidden-md">City</th>
-        <th class="col-company hidden-sm">Company</th>
-        <th class="col-actions">Actions</th>
-      </tr>
+        <tr>
+          <th class="col-user">User</th>
+          <th class="col-email hidden-xs">Email</th>
+          <th class="col-city hidden-md">City</th>
+          <th class="col-company hidden-sm">Company</th>
+          <th class="col-actions">Actions</th>
+        </tr>
       </thead>
       <tbody>
         @for (user of usersOnPage; track user.id) {
           <tr class="user-list-page__row">
             <td class="col-user">
               <div class="user-cell">
-
-                <nz-avatar [nzText]="user.name.charAt(0)" nzSize="default"></nz-avatar>
+                <nz-avatar
+                  [nzText]="user.name.charAt(0)"
+                  nzSize="default"
+                ></nz-avatar>
                 <div class="user-info">
-                  <a [routerLink]="detailRouteFn(user.id)" [relativeTo]="null">{{ user.name }}</a>
+                  <a
+                    [routerLink]="detailRouteFn(user.id)"
+                    [relativeTo]="null"
+                    >{{ user.name }}</a
+                  >
                   <span class="username">&#64;{{ user.username }}</span>
                 </div>
               </div>
@@ -57,24 +72,43 @@
             <td class="col-company hidden-sm">{{ user.company.name }}</td>
             <td class="col-actions actions-cell">
               <nz-space [nzSize]="'middle'">
-                <a nz-button nzType="link" [routerLink]="editRouteFn(user.id)" [relativeTo]="null" nz-tooltip="Edit">
+                <a
+                  nz-button
+                  nzType="link"
+                  [routerLink]="editRouteFn(user.id)"
+                  [relativeTo]="null"
+                  nz-tooltip="Edit"
+                >
                   <span nz-icon nzType="edit"></span>
                   <span class="action-text">Edit</span>
                 </a>
-                <a nz-button nzType="link" nzDanger (click)="deleteUser(user.id)" nz-tooltip="Delete">
+                <button
+                  nz-button
+                  nzType="link"
+                  nzDanger
+                  (click)="deleteUser(user.id)"
+                  nz-tooltip="Delete"
+                >
                   <span nz-icon nzType="delete"></span>
                   <span class="action-text">Delete</span>
-                </a>
+                </button>
               </nz-space>
             </td>
           </tr>
-        }
-        @empty {
+        } @empty {
           <tr class="user-list-page__empty-row">
             <td [attr.colspan]="5" class="empty-cell">
-              @if (!isLoading() && (filteredUsers()?.length === 0)) {
-                <nz-empty nzNotFoundImage="simple" nzNotFoundContent="No users found">
-                  <button nz-button nzType="primary" [routerLink]="newUserRoute" [relativeTo]="null">
+              @if (!isLoading() && filteredUsers()?.length === 0) {
+                <nz-empty
+                  nzNotFoundImage="simple"
+                  nzNotFoundContent="No users found"
+                >
+                  <button
+                    nz-button
+                    nzType="primary"
+                    [routerLink]="newUserRoute"
+                    [relativeTo]="null"
+                  >
                     <span nz-icon nzType="plus"></span>
                     Create first user
                   </button>

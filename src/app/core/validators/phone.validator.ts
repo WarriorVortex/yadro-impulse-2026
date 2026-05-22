@@ -7,7 +7,8 @@ export function phoneValidator(): ValidatorFn {
       return null;
     }
 
-    const phonePattern = /^\+?[\d\s\-().]{7,20}(?:\s*(?:x|ext\.?)\s*\d{1,6})?$/i;
+    const phonePattern =
+      /^\+?[\d\s\-().]{7,20}(?:\s*(?:x|ext\.?)\s*\d{1,6})?$/i;
     return phonePattern.test(value) ? null : { invalidPhone: true };
   };
 }

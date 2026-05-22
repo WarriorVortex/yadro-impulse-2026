@@ -1,3 +1,3 @@
-import {UpdateUser} from '@app/models';
+import { UpdateUser } from '@app/models';
 
-export type PersonalUserInfo = Omit<UpdateUser, 'address' | 'company'>
+export type PersonalUserInfo = Omit<UpdateUser, 'address' | 'company'>;

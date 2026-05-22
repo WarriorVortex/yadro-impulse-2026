@@ -10,8 +10,12 @@
       <nz-form-control [nzErrorTip]="nameError">
         <input nz-input formControlName="name" placeholder="John Doe" />
         <ng-template #nameError let-control>
-          @if (control.hasError('required')) { Name is required }
-          @if (control.hasError('minlength')) { Minimum length is 3 characters }
+          @if (control.hasError("required")) {
+            Name is required
+          }
+          @if (control.hasError("minlength")) {
+            Minimum length is 3 characters
+          }
         </ng-template>
       </nz-form-control>
     </nz-form-item>
@@ -20,8 +24,12 @@
       <nz-form-control [nzErrorTip]="usernameError">
         <input nz-input formControlName="username" placeholder="johndoe" />
         <ng-template #usernameError let-control>
-          @if (control.hasError('required')) { Username is required }
-          @if (control.hasError('minlength')) { Minimum length is 3 characters }
+          @if (control.hasError("required")) {
+            Username is required
+          }
+          @if (control.hasError("minlength")) {
+            Minimum length is 3 characters
+          }
         </ng-template>
       </nz-form-control>
     </nz-form-item>
@@ -30,10 +38,19 @@
   <nz-form-item>
     <nz-form-label nzRequired>Email</nz-form-label>
     <nz-form-control [nzErrorTip]="emailError">
-      <input nz-input formControlName="email" type="email" placeholder="john@example.com" />
+      <input
+        nz-input
+        formControlName="email"
+        type="email"
+        placeholder="john@example.com"
+      />
       <ng-template #emailError let-control>
-        @if (control.hasError('required')) { Email is required }
-        @if (control.hasError('email')) { Please enter a valid email }
+        @if (control.hasError("required")) {
+          Email is required
+        }
+        @if (control.hasError("email")) {
+          Please enter a valid email
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -42,9 +59,13 @@
     <nz-form-item class="form-item-half">
       <nz-form-label>Phone</nz-form-label>
       <nz-form-control [nzErrorTip]="phoneError">
-        <input nz-input formControlName="phone" placeholder="+1 (555) 000-0000" />
+        <input
+          nz-input
+          formControlName="phone"
+          placeholder="+1 (555) 000-0000"
+        />
         <ng-template #phoneError let-control>
-          {{ control.getError('invalidPhone') }}
+          {{ control.getError("invalidPhone") }}
         </ng-template>
       </nz-form-control>
     </nz-form-item>
@@ -53,7 +74,7 @@
       <nz-form-control [nzErrorTip]="websiteError">
         <input nz-input formControlName="website" placeholder="example.com" />
         <ng-template #websiteError let-control>
-          {{ control.getError('invalidWebsite') }}
+          {{ control.getError("invalidWebsite") }}
         </ng-template>
       </nz-form-control>
     </nz-form-item>

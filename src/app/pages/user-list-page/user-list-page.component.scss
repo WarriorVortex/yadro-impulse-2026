@@ -1,4 +1,4 @@
-@use 'table-mixins' as table;
+@use "table-mixins" as table;
 
 .user-list-page {
   padding: 24px;
@@ -7,7 +7,9 @@
   &__card {
     background: var(--ant-component-background, #1f1f1f);
     border-radius: 12px;
-    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 1px 2px -2px rgba(0, 0, 0, 0.16),
+      0 3px 6px 0 rgba(0, 0, 0, 0.12);
     overflow: hidden;
     transition: box-shadow 0.3s;
 
@@ -42,13 +44,15 @@
     margin-bottom: 24px;
     border-radius: 8px;
 
-    @include table.fixed-table-columns((
-      user: 28%,
-      email: 27%,
-      city: 15%,
-      company: 20%,
-      actions: 10%
-    ));
+    @include table.fixed-table-columns(
+      (
+        user: 28%,
+        email: 27%,
+        city: 15%,
+        company: 20%,
+        actions: 10%,
+      )
+    );
     @include table.table-cell-padding(16px);
     @include table.table-row-animation;
 
@@ -108,7 +112,8 @@
   .user-list-page {
     padding: 16px;
 
-    &__header, &__search {
+    &__header,
+    &__search {
       padding: 0 16px;
     }
 
@@ -126,7 +131,8 @@
   .user-list-page {
     padding: 12px;
 
-    &__header, &__search {
+    &__header,
+    &__search {
       padding: 0 12px;
     }
 

@@ -11,7 +11,12 @@ type CompanyFormControls = FormControlsOf<Company>;
 @Component({
   selector: 'app-user-form-company',
   standalone: true,
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule, NzDividerComponent],
+  imports: [
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzDividerComponent,
+  ],
   templateUrl: './user-form-company.component.html',
   styleUrls: ['./user-form-company.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

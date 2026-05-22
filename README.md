@@ -1,59 +1,76 @@
-# YadroImpulse2026
+# Yadro Impulse 2026 – User Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.0.
+**Команда разработки внутренних продуктов**
 
-## Development server
+Веб-приложение для управления пользователями с использованием тестового REST API [JSONPlaceholder](https://jsonplaceholder.typicode.com/).  
+Реализован полный CRUD: просмотр списка с постраничной навигацией и фильтрацией, страница детальной информации, создание и редактирование через реактивную форму с валидацией.
 
-To start a local development server, run:
+## Стек
 
-```bash
-ng serve
-```
+- **Angular 20** (standalone‑компоненты, zoneless, сигналы, `OnPush`)
+- **SCSS** — CSS-препроцессор
+- [**Ng‑Zorro**](https://ng.ant.design/docs/introduce/en)
+- **Reactive Forms** с кастомными валидаторами
+- **RxJS** – асинхронные запросы, кастомные операторы кеширования
+- **GitHub Actions** – автоматический деплой на GitHub Pages
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Запуск
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Локально (для разработки)
 
 ```bash
-ng generate --help
+git clone https://github.com/WarriorVortex/yadro-impulse-2026.git
+cd yadro-impulse-2026
+npm install
+npm run start
 ```
 
-## Building
+Приложение будет доступно на [http://localhost:4200/](http://localhost:4200/).
 
-To build the project run:
+### Развёрнутая версия
+
+[https://warriorvortex.github.io/yadro-impulse-2026/](https://warriorvortex.github.io/yadro-impulse-2026/)
+
+### Сборка для продакшена
 
 ```bash
-ng build
+npm run build -- --configuration production
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Результат в папке `dist/browser`.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Тесты
 
 ```bash
-ng test
+npm run test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Линтинг и форматирование
 
 ```bash
-ng e2e
+npm run lint      # проверка ESLint
+npm run format    # форматирование Prettier
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## API
 
-## Additional Resources
+Базовый URL: `https://jsonplaceholder.typicode.com`
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Метод   | Путь        | Описание                  |
+|---------|-------------|---------------------------|
+| `GET`   | `/users`    | Список пользователей      |
+| `GET`   | `/users/{id}` | Детали пользователя     |
+| `POST`  | `/users`    | Создание нового пользователя |
+| `PUT`   | `/users/{id}` | Обновление пользователя |
+| `DELETE`| `/users/{id}` | Удаление пользователя   |
+
+Ответы `POST` и `PUT` возвращают созданный/обновлённый объект с новым `id`.
+
+## Функциональность
+
+- **Список пользователей** – клиентская пагинация, динамическая фильтрация по имени, email, username или компании.
+- **Детальная страница** – все поля модели (адрес, компания, гео‑координаты), анимированные секции, кнопки «Редактировать» и «Назад».
+- **Форма создания/редактирования** – реактивная форма с валидацией:
+  - Обязательные поля: имя, username, email
+  - Кастомная валидация телефона, веб‑сайта, географических координат
+  - Форма разбита на логические блоки (персональные данные, адрес, компания)

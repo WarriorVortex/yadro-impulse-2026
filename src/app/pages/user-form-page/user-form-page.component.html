@@ -10,10 +10,14 @@
           ></nz-avatar>
           <div>
             <h1 class="form-title">
-              {{ isEditMode() ? 'Edit User' : 'Create User' }}
+              {{ isEditMode() ? "Edit User" : "Create User" }}
             </h1>
             <span class="form-subtitle">
-              {{ isEditMode() ? 'Update user information' : 'Add a new user to the system' }}
+              {{
+                isEditMode()
+                  ? "Update user information"
+                  : "Add a new user to the system"
+              }}
             </span>
           </div>
         </div>
@@ -28,10 +32,18 @@
     @if (isLoading()) {
       <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 8 }"></nz-skeleton>
     } @else if (isError()) {
-      <nz-empty nzNotFoundImage="simple" nzNotFoundContent="Failed to load user data"></nz-empty>
+      <nz-empty
+        nzNotFoundImage="simple"
+        nzNotFoundContent="Failed to load user data"
+      ></nz-empty>
     } @else {
       <div class="form-container animate-fade">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+        <form
+          [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          nz-form
+          nzLayout="vertical"
+        >
           <app-user-form-personal [formGroup]="$any(form)" />
           <app-user-form-address [formGroup]="form.controls.address" />
           <app-user-form-company [formGroup]="form.controls.company" />
@@ -44,7 +56,7 @@
               [disabled]="form.invalid"
               type="submit"
             >
-              {{ isEditMode() ? 'Update' : 'Create' }}
+              {{ isEditMode() ? "Update" : "Create" }}
             </button>
           </div>
         </form>

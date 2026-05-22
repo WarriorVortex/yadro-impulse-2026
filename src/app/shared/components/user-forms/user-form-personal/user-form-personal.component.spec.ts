@@ -8,9 +8,8 @@ describe('UserFormPersonalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserFormPersonalComponent]
-    })
-    .compileComponents();
+      imports: [UserFormPersonalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserFormPersonalComponent);
     component = fixture.componentInstance;
