@@ -6,14 +6,16 @@ export const USER_FILTER_PREDICATE = new InjectionToken<UserFilterPredicate>(
   'USER_FILTER_PREDICATE',
   {
     factory: () => ({ name, email }: User, { search }: FilterUsersParams) => {
-      let trimmedSearch = search.trim();
+      const trimmedSearch = search.trim();
 
       if (!trimmedSearch) {
         return true;
       }
 
-      return name.toLowerCase().includes(trimmedSearch) ||
-        email.toLowerCase().includes(trimmedSearch);
+      const searchTerm = trimmedSearch.toLowerCase();
+
+      return name.toLowerCase().includes(searchTerm) ||
+        email.toLowerCase().includes(searchTerm);
     }
   }
 );
