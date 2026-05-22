@@ -1,0 +1,155 @@
+@use 'table-mixins' as table;
+
+.user-list-page {
+  padding: 24px;
+  background: var(--ant-background-color, #141414);
+
+  &__card {
+    background: var(--ant-component-background, #1f1f1f);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__header {
+    margin-bottom: 24px;
+    padding: 0 24px;
+
+    ::ng-deep .ant-page-header-heading-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--ant-heading-color, #fff);
+    }
+
+    ::ng-deep .ant-page-header-heading-sub-title {
+      font-size: 14px;
+      color: var(--ant-text-color-secondary, #a6a6a6);
+    }
+  }
+
+  &__search {
+    margin-bottom: 24px;
+    max-width: 420px;
+    padding: 0 24px;
+  }
+
+  &__table {
+    margin-bottom: 24px;
+    border-radius: 8px;
+
+    @include table.fixed-table-columns((
+      user: 28%,
+      email: 27%,
+      city: 15%,
+      company: 20%,
+      actions: 10%
+    ));
+    @include table.table-cell-padding(16px);
+    @include table.table-row-animation;
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+
+        a {
+          font-weight: 500;
+          color: var(--ant-primary-color, #1890ff);
+          transition: color 0.2s;
+
+          &:hover {
+            color: var(--ant-primary-color-hover, #40a9ff);
+            text-decoration: underline;
+          }
+        }
+
+        .username {
+          font-size: 12px;
+          color: var(--ant-text-color-secondary, #a6a6a6);
+        }
+      }
+    }
+
+    .email-cell {
+      font-family: monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .actions-cell {
+      text-align: center;
+
+      .action-text {
+        display: inline-block;
+      }
+    }
+
+    .empty-cell {
+      padding: 32px 16px !important;
+      text-align: center;
+
+      nz-empty {
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-list-page {
+    padding: 16px;
+
+    &__header, &__search {
+      padding: 0 16px;
+    }
+
+    .action-text {
+      display: none;
+    }
+
+    [class*="col-"] {
+      padding: 12px !important;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .user-list-page {
+    padding: 12px;
+
+    &__header, &__search {
+      padding: 0 12px;
+    }
+
+    [class*="col-"] {
+      padding: 10px !important;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .hidden-md {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hidden-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .hidden-xs {
+    display: none;
+  }
+}
