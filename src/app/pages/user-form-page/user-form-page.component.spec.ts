@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { of } from 'rxjs';
 import { UserFormPageComponent } from './user-form-page.component';
 import { UserService } from '@app/services';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { ActivatedRoute } from '@angular/router';
 import {
-  UserOutline,
-  EditOutline,
   ArrowLeftOutline,
-  PlusOutline,
-  EnvironmentOutline,
   BankOutline,
+  EditOutline,
+  EnvironmentOutline,
+  PlusOutline,
+  UserOutline,
 } from '@ant-design/icons-angular/icons';
 
 describe('UserFormPageComponent', () => {
-  let userService: any;
-  let notificationService: any;
+  let userService: Record<string, jest.Mock>;
+  let notificationService: Record<string, jest.Mock>;
   let router: Router;
 
   async function setup(isEdit: boolean) {
@@ -27,22 +27,24 @@ describe('UserFormPageComponent', () => {
     const paramMap = isEdit ? new Map([['id', '1']]) : new Map();
 
     userService = {
-      getUser: jest.fn().mockReturnValue(of({
-        id: 1,
-        name: 'Edit Me',
-        username: 'edit',
-        email: 'edit@test.com',
-        phone: '555-1234',
-        website: 'edit.com',
-        address: {
-          street: 'edit st',
-          suite: '1',
-          city: 'edit city',
-          zipcode: '00000',
-          geo: { lat: '1', lng: '1' },
-        },
-        company: { name: 'Edit Corp', catchPhrase: 'edit', bs: 'edit' },
-      })),
+      getUser: jest.fn().mockReturnValue(
+        of({
+          id: 1,
+          name: 'Edit Me',
+          username: 'edit',
+          email: 'edit@test.com',
+          phone: '555-1234',
+          website: 'edit.com',
+          address: {
+            street: 'edit st',
+            suite: '1',
+            city: 'edit city',
+            zipcode: '00000',
+            geo: { lat: '1', lng: '1' },
+          },
+          company: { name: 'Edit Corp', catchPhrase: 'edit', bs: 'edit' },
+        }),
+      ),
       createUser: jest.fn().mockReturnValue(of({ id: 2 })),
       updateUser: jest.fn().mockReturnValue(of({ id: 1 })),
     };
@@ -110,7 +112,9 @@ describe('UserFormPageComponent', () => {
       await fixture.whenStable();
 
       expect(component.form.invalid).toBe(true);
-      const errors = fixture.nativeElement.querySelectorAll('.ant-form-item-explain-error');
+      const errors = fixture.nativeElement.querySelectorAll(
+        '.ant-form-item-explain-error',
+      );
       expect(errors.length).toBeGreaterThan(0);
     });
 
@@ -143,8 +147,8 @@ describe('UserFormPageComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
 
-      expect(userService.createUser).toHaveBeenCalled();
-      expect(notificationService.success).toHaveBeenCalled();
+      expect(userService['createUser']).toHaveBeenCalled();
+      expect(notificationService['success']).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['users']);
     });
   });
@@ -172,7 +176,10 @@ describe('UserFormPageComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
 
-      component.form.patchValue({ name: 'Updated Name', phone: '1234567' });
+      component.form.patchValue({
+        name: 'Updated Name',
+        phone: '1234567',
+      });
       fixture.detectChanges();
       await fixture.whenStable();
       expect(component.form.valid).toBe(true);
@@ -180,11 +187,11 @@ describe('UserFormPageComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
 
-      expect(userService.updateUser).toHaveBeenCalledWith(
+      expect(userService['updateUser']).toHaveBeenCalledWith(
         1,
-        expect.objectContaining({ name: 'Updated Name' })
+        expect.objectContaining({ name: 'Updated Name' }),
       );
-      expect(notificationService.success).toHaveBeenCalled();
+      expect(notificationService['success']).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith(['users']);
     });
   });

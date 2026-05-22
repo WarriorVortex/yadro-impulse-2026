@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { PaginationComponent } from './pagination.component';
 
 describe('PaginationComponent', () => {
-  let component: any;
+  let component: PaginationComponent;
   let fixture: ComponentFixture<PaginationComponent>;
 
   beforeEach(async () => {
@@ -13,7 +13,7 @@ describe('PaginationComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginationComponent);
-    component = fixture.componentInstance as any;
+    component = fixture.componentInstance;
     fixture.componentRef.setInput('total', 100);
     component.pageSize.set(10);
     component.pageIndex.set(1);

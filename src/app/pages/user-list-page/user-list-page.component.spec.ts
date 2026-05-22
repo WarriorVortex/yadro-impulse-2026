@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { UserListPageComponent } from './user-list-page.component';
 import { UserService } from '@app/services';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { User } from '@app/models';
 import {
   PlusOutline,
   SearchOutline,
@@ -16,7 +17,14 @@ import {
   ArrowLeftOutline,
 } from '@ant-design/icons-angular/icons';
 
-const mockUsers = [
+type TestableUserListPageComponent = UserListPageComponent & {
+  search: { set: (v: string) => void };
+  pageSize: { set: (v: number) => void };
+  currentPage: { set: (v: number) => void };
+  deleteUser: (id: number) => void;
+};
+
+const mockUsers: User[] = [
   {
     id: 1,
     name: 'Alpha',
@@ -52,20 +60,28 @@ const mockUsers = [
 ];
 
 describe('UserListPageComponent', () => {
-  let component: any;
+  let component: UserListPageComponent;
+  let testComponent: TestableUserListPageComponent;
   let fixture: ComponentFixture<UserListPageComponent>;
-  let userService: any;
-  let notificationService: any;
+  let userService: {
+    getUsers: jest.Mock;
+    filterUsers: jest.Mock;
+    deleteUser: jest.Mock;
+  };
+  let notificationService: {
+    success: jest.Mock;
+    error: jest.Mock;
+  };
   let router: Router;
 
   beforeEach(async () => {
     userService = {
       getUsers: jest.fn().mockReturnValue(of([...mockUsers])),
-      filterUsers: jest.fn((users: any[], params: any) => {
+      filterUsers: jest.fn((users: User[], params: { search: string }) => {
         const term = params.search.toLowerCase();
         return of(
           users.filter(
-            (u: any) =>
+            (u: User) =>
               u.name.toLowerCase().includes(term) ||
               u.email.toLowerCase().includes(term),
           ),
@@ -99,7 +115,8 @@ describe('UserListPageComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserListPageComponent);
-    component = fixture.componentInstance as any;
+    component = fixture.componentInstance;
+    testComponent = component as TestableUserListPageComponent;
     router = TestBed.inject(Router);
     jest.spyOn(router, 'navigate');
     fixture.detectChanges();
@@ -119,7 +136,7 @@ describe('UserListPageComponent', () => {
   });
 
   it('should filter users by name when search term is set', async () => {
-    component.search.set('Beta');
+    testComponent.search.set('Beta');
     fixture.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 350));
     fixture.detectChanges();
@@ -130,7 +147,7 @@ describe('UserListPageComponent', () => {
   });
 
   it('should paginate correctly', async () => {
-    component.pageSize.set(1);
+    testComponent.pageSize.set(1);
     fixture.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 350));
     fixture.detectChanges();
@@ -139,7 +156,7 @@ describe('UserListPageComponent', () => {
     expect(rows.length).toBe(1);
     expect(rows[0].textContent).toContain('Alpha');
 
-    component.currentPage.set(2);
+    testComponent.currentPage.set(2);
     fixture.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 50));
     fixture.detectChanges();
@@ -150,7 +167,7 @@ describe('UserListPageComponent', () => {
   });
 
   it('should delete a user and reload list', async () => {
-    component.deleteUser(1);
+    testComponent.deleteUser(1);
     fixture.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 300));
     fixture.detectChanges();

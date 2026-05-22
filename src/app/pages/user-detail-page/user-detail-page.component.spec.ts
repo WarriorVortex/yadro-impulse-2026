@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { provideRouter, Router } from '@angular/router';
+import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { of, throwError } from 'rxjs';
 import { UserDetailPageComponent } from './user-detail-page.component';
 import { UserService } from '@app/services';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { ActivatedRoute } from '@angular/router';
 import {
-  UserOutline,
-  EditOutline,
   ArrowLeftOutline,
-  EnvironmentOutline,
   BankOutline,
+  EditOutline,
+  EnvironmentOutline,
+  UserOutline,
 } from '@ant-design/icons-angular/icons';
 
 const mockUser = {
@@ -38,10 +37,9 @@ const mockUser = {
 };
 
 describe('UserDetailPageComponent', () => {
-  let component: any;
   let fixture: ComponentFixture<UserDetailPageComponent>;
-  let userService: any;
-  let notificationService: any;
+  let userService: { getUser: jest.Mock };
+  let notificationService: { success: jest.Mock; error: jest.Mock };
   let router: Router;
 
   async function setup(routeId: string, userObs = of(mockUser)) {
@@ -78,7 +76,6 @@ describe('UserDetailPageComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserDetailPageComponent);
-    component = fixture.componentInstance as any;
     router = TestBed.inject(Router);
     jest.spyOn(router, 'navigate');
     fixture.detectChanges();
@@ -88,7 +85,9 @@ describe('UserDetailPageComponent', () => {
 
   it('should create and display user details', async () => {
     await setup('1');
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
+
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Test User');
     expect(text).toContain('555-1234');
@@ -96,7 +95,12 @@ describe('UserDetailPageComponent', () => {
   });
 
   it('should show error notification and empty state on failure', async () => {
-    await setup('1', throwError(() => new Error('Not found')));
+    await setup(
+      '1',
+      throwError(() => new Error('Not found')),
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const component = fixture.componentInstance as any;
     expect(notificationService.error).toHaveBeenCalled();
     expect(component.isError()).toBe(true);
     expect(fixture.nativeElement.querySelector('nz-empty')).toBeTruthy();
