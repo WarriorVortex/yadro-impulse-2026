@@ -7,7 +7,8 @@ export function websiteValidator(): ValidatorFn {
       return null;
     }
 
-    const websitePattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$/i;
+    const websitePattern =
+      /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-./?%&=]*)?$/i;
     return websitePattern.test(value) ? null : { invalidWebsite: true };
   };
 }
