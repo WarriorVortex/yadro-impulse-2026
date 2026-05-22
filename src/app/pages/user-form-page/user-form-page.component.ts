@@ -1,39 +1,27 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  Signal,
-  signal,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  ReactiveFormsModule,
-  FormGroup,
-  Validators,
-  FormBuilder,
-  FormControl,
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, delay, map, of, tap } from 'rxjs';
-import { NzCardComponent } from 'ng-zorro-antd/card';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzPageHeaderComponent } from 'ng-zorro-antd/page-header';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzSkeletonComponent } from 'ng-zorro-antd/skeleton';
-import { NzAvatarComponent } from 'ng-zorro-antd/avatar';
-import { NzEmptyComponent } from 'ng-zorro-antd/empty';
-import { NzDividerComponent } from 'ng-zorro-antd/divider';
-import { UserService } from '@app/services';
-import { USER_EDIT_SUFFIX, USER_ID_PARAM, USER_LIST_ROUTE } from '@app/routes';
-import { UpdateUser } from '@app/models';
-import { UserFormControls } from './user-form-controls.model';
+import {ChangeDetectionStrategy, Component, DestroyRef, effect, inject, Signal, signal,} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
+import {catchError, delay, map, of, tap} from 'rxjs';
+import {NzCardComponent} from 'ng-zorro-antd/card';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzButtonComponent} from 'ng-zorro-antd/button';
+import {NzPageHeaderComponent} from 'ng-zorro-antd/page-header';
+import {NzIconDirective} from 'ng-zorro-antd/icon';
+import {NzNotificationService} from 'ng-zorro-antd/notification';
+import {NzSkeletonComponent} from 'ng-zorro-antd/skeleton';
+import {NzAvatarComponent} from 'ng-zorro-antd/avatar';
+import {NzEmptyComponent} from 'ng-zorro-antd/empty';
+import {UserService} from '@app/services';
+import {USER_EDIT_SUFFIX, USER_ID_PARAM, USER_LIST_ROUTE} from '@app/routes';
+import {Address, Company, PersonalUserInfo, UpdateUser} from '@app/models';
 import {latitudeValidator, longitudeValidator, phoneValidator, websiteValidator} from '@app/validators';
+import {UserFormAddressComponent, UserFormCompanyComponent, UserFormPersonalComponent} from '@app/components';
+import {FormControlsOf} from '@app/utils';
+
+type UserFormControls = FormControlsOf<UpdateUser>;
 
 @Component({
   selector: 'app-user-form-page',
@@ -51,7 +39,9 @@ import {latitudeValidator, longitudeValidator, phoneValidator, websiteValidator}
     NzSkeletonComponent,
     NzAvatarComponent,
     NzEmptyComponent,
-    NzDividerComponent,
+    UserFormPersonalComponent,
+    UserFormAddressComponent,
+    UserFormCompanyComponent,
   ],
   templateUrl: './user-form-page.component.html',
   styleUrls: ['./user-form-page.component.scss'],
@@ -89,27 +79,35 @@ export class UserFormPageComponent {
   }
 
   private buildForm(): FormGroup<UserFormControls> {
-    return this.fb.group<UserFormControls>({
+    const personalInfoControls: FormControlsOf<PersonalUserInfo> = {
       name: this.fb.control('', { validators: [Validators.required, Validators.minLength(3)], nonNullable: true }),
       username: this.fb.control('', { validators: [Validators.required, Validators.minLength(3)], nonNullable: true }),
       email: this.fb.control('', { validators: [Validators.required, Validators.email], nonNullable: true }),
       phone: this.fb.control('', { validators: [phoneValidator()], nonNullable: true }),
       website: this.fb.control('', { validators: [websiteValidator()], nonNullable: true }),
-      address: this.fb.group({
-        street: this.fb.control('', { nonNullable: true }),
-        suite: this.fb.control('', { nonNullable: true }),
-        city: this.fb.control('', { nonNullable: true }),
-        zipcode: this.fb.control('', { nonNullable: true }),
-        geo: this.fb.group({
-          lat: this.fb.control('', { validators: [latitudeValidator()], nonNullable: true }),
-          lng: this.fb.control('', { validators: [longitudeValidator()], nonNullable: true }),
-        }),
+    }
+
+    const addressControls: FormControlsOf<Address> = {
+      street: this.fb.control('', { nonNullable: true }),
+      suite: this.fb.control('', { nonNullable: true }),
+      city: this.fb.control('', { nonNullable: true }),
+      zipcode: this.fb.control('', { nonNullable: true }),
+      geo: this.fb.group({
+        lat: this.fb.control('', { validators: [latitudeValidator()], nonNullable: true }),
+        lng: this.fb.control('', { validators: [longitudeValidator()], nonNullable: true }),
       }),
-      company: this.fb.group({
-        name: this.fb.control('', { nonNullable: true }),
-        catchPhrase: this.fb.control('', { nonNullable: true }),
-        bs: this.fb.control('', { nonNullable: true }),
-      }),
+    }
+
+    const companyControls: FormControlsOf<Company> = {
+      name: this.fb.control('', { nonNullable: true }),
+      catchPhrase: this.fb.control('', { nonNullable: true }),
+      bs: this.fb.control('', { nonNullable: true }),
+    }
+
+    return this.fb.group<UserFormControls>({
+      ...personalInfoControls,
+      address: this.fb.group(addressControls),
+      company: this.fb.group(companyControls),
     });
   }
 

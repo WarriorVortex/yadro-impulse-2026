@@ -51,31 +51,6 @@
     &.animate-fade {
       animation: fadeIn 0.4s ease-out both;
     }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--ant-heading-color, #fff);
-      margin-bottom: 16px;
-
-      .anticon {
-        font-size: 20px;
-        color: var(--ant-primary-color, #1890ff);
-      }
-    }
-  }
-
-  .form-row {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .form-item-half {
-    flex: 1 1 200px;
   }
 
   nz-divider {

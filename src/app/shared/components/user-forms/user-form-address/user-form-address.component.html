@@ -1,0 +1,54 @@
+<nz-divider nzText="Address" nzOrientation="left"></nz-divider>
+<div [formGroup]="formGroup()">
+  <div class="form-row">
+    <nz-form-item class="form-item-half">
+      <nz-form-label>Street</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="street" placeholder="123 Main St" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="form-item-half">
+      <nz-form-label>Suite</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="suite" placeholder="Apt. 4" />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="form-row">
+    <nz-form-item class="form-item-half">
+      <nz-form-label>City</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="city" placeholder="New York" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="form-item-half">
+      <nz-form-label>Zipcode</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="zipcode" placeholder="10001" />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div formGroupName="geo">
+    <div class="form-row">
+      <nz-form-item class="form-item-half">
+        <nz-form-label>Latitude</nz-form-label>
+        <nz-form-control [nzErrorTip]="latError">
+          <input nz-input formControlName="lat" placeholder="40.7128" />
+          <ng-template #latError let-control>
+            {{ control.getError('invalidLatitude') }}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="form-item-half">
+        <nz-form-label>Longitude</nz-form-label>
+        <nz-form-control [nzErrorTip]="lngError">
+          <input nz-input formControlName="lng" placeholder="-74.0060" />
+          <ng-template #lngError let-control>
+            {{ control.getError('invalidLongitude') }}
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</div>

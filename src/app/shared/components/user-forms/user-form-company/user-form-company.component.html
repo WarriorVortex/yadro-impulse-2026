@@ -1,0 +1,23 @@
+<nz-divider nzText="Company" nzOrientation="left"></nz-divider>
+<div [formGroup]="formGroup()">
+  <nz-form-item>
+    <nz-form-label>Company Name</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="name" placeholder="Acme Inc." />
+    </nz-form-control>
+  </nz-form-item>
+  <div class="form-row">
+    <nz-form-item class="form-item-half">
+      <nz-form-label>Catch Phrase</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="catchPhrase" placeholder="We do stuff" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="form-item-half">
+      <nz-form-label>BS</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="bs" placeholder="synergize" />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
