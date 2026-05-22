@@ -1,9 +1,9 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
-import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {NzFormModule} from 'ng-zorro-antd/form';
-import {NzInputModule} from 'ng-zorro-antd/input';
-import {NzIconDirective} from 'ng-zorro-antd/icon';
-import {PersonalUserInfo} from '@app/models';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { PersonalUserInfo } from '@app/models';
 import { FormControlsOf } from '@app/utils';
 
 type UserPersonalControls = FormControlsOf<PersonalUserInfo>;

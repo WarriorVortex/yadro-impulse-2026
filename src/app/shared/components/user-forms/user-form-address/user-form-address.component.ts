@@ -11,7 +11,12 @@ type AddressFormControls = FormControlsOf<Address>;
 @Component({
   selector: 'app-user-form-address',
   standalone: true,
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule, NzDividerComponent],
+  imports: [
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzDividerComponent,
+  ],
   templateUrl: './user-form-address.component.html',
   styleUrls: ['./user-form-address.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

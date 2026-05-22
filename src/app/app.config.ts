@@ -1,4 +1,8 @@
-import {ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection} from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
@@ -8,11 +12,11 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { routes } from './app.routes';
 
-const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
-};
+const antDesignIcons = AllIcons as Record<string, IconDefinition>;
 
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key]);
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
+  (key) => antDesignIcons[key],
+);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     provideNzI18n(en_US),
-    provideNzIcons(icons)
-  ]
+    provideNzIcons(icons),
+  ],
 };

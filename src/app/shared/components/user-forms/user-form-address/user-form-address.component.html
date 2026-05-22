@@ -36,7 +36,7 @@
         <nz-form-control [nzErrorTip]="latError">
           <input nz-input formControlName="lat" placeholder="40.7128" />
           <ng-template #latError let-control>
-            {{ control.getError('invalidLatitude') }}
+            {{ control.getError("invalidLatitude") }}
           </ng-template>
         </nz-form-control>
       </nz-form-item>
@@ -45,7 +45,7 @@
         <nz-form-control [nzErrorTip]="lngError">
           <input nz-input formControlName="lng" placeholder="-74.0060" />
           <ng-template #lngError let-control>
-            {{ control.getError('invalidLongitude') }}
+            {{ control.getError("invalidLongitude") }}
           </ng-template>
         </nz-form-control>
       </nz-form-item>

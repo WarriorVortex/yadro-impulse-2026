@@ -1,25 +1,51 @@
-import {ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, Signal, signal} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
-import {combineLatest, debounceTime, delay, Observable, of, switchMap, tap, throwError} from 'rxjs';
-import {NzTableComponent, NzThMeasureDirective} from 'ng-zorro-antd/table';
-import {NzButtonComponent} from 'ng-zorro-antd/button';
-import {NzInputDirective, NzInputGroupComponent} from 'ng-zorro-antd/input';
-import {NzSpaceComponent} from 'ng-zorro-antd/space';
-import {UserService} from '@app/services';
-import {User} from '@app/models';
-import {getUserDetailRoute, getUserEditRoute, USER_NEW_ROUTE} from '@app/routes';
-import {takeUntilDestroyed, toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {NzNotificationService} from 'ng-zorro-antd/notification';
-import {catchError, filter} from 'rxjs/operators';
-import {NzEmptyComponent} from 'ng-zorro-antd/empty';
-import {NzCardComponent} from 'ng-zorro-antd/card';
-import {NzPageHeaderComponent} from 'ng-zorro-antd/page-header';
-import {NzIconDirective} from 'ng-zorro-antd/icon';
-import {NzAvatarComponent} from 'ng-zorro-antd/avatar';
-import {NzTooltipDirective} from 'ng-zorro-antd/tooltip';
-import {PaginationComponent} from '@app/components';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  Signal,
+  signal,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import {
+  combineLatest,
+  debounceTime,
+  delay,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
+import { NzTableComponent, NzThMeasureDirective } from 'ng-zorro-antd/table';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
+import { NzSpaceComponent } from 'ng-zorro-antd/space';
+import { UserService } from '@app/services';
+import { User } from '@app/models';
+import {
+  getUserDetailRoute,
+  getUserEditRoute,
+  USER_NEW_ROUTE,
+} from '@app/routes';
+import {
+  takeUntilDestroyed,
+  toObservable,
+  toSignal,
+} from '@angular/core/rxjs-interop';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { catchError, filter } from 'rxjs/operators';
+import { NzEmptyComponent } from 'ng-zorro-antd/empty';
+import { NzCardComponent } from 'ng-zorro-antd/card';
+import { NzPageHeaderComponent } from 'ng-zorro-antd/page-header';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzAvatarComponent } from 'ng-zorro-antd/avatar';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { PaginationComponent } from '@app/components';
 
 @Component({
   selector: 'app-user-list-page',
@@ -44,7 +70,7 @@ import {PaginationComponent} from '@app/components';
   ],
   templateUrl: './user-list-page.component.html',
   styleUrls: ['./user-list-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserListPageComponent {
   protected pageSize = signal(5);
@@ -54,7 +80,7 @@ export class UserListPageComponent {
 
   protected isLoading = signal(true);
   protected users = signal<User[] | null>(null);
-  protected filteredUsers: Signal<User[] | null>
+  protected filteredUsers: Signal<User[] | null>;
   protected paginatedUsers: Signal<User[] | null>;
 
   protected readonly newUserRoute = USER_NEW_ROUTE;
@@ -90,23 +116,26 @@ export class UserListPageComponent {
   }
 
   protected deleteUser(id: number): void {
-    this.userService.deleteUser(id).pipe(
-      tap(() => {
-        this.notification.success('Success', 'User was deleted');
-      }),
-      catchError((err) => {
-        this.notification.error('Error', 'Cannot delete user');
+    this.userService
+      .deleteUser(id)
+      .pipe(
+        tap(() => {
+          this.notification.success('Success', 'User was deleted');
+        }),
+        catchError((err) => {
+          this.notification.error('Error', 'Cannot delete user');
 
-        return throwError(() => err);
-      }),
-      switchMap(() => this.loadUsers()),
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe();
+          return throwError(() => err);
+        }),
+        switchMap(() => this.loadUsers()),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe();
   }
 
   private loadUsers(): Observable<User[] | null> {
     return this.userService.getUsers().pipe(
-      tap(users => this.users.set(users)),
+      tap((users) => this.users.set(users)),
       catchError((err) => {
         this.notification.error('Error', 'Cannot load users');
         this.isLoading.set(false);
@@ -120,7 +149,7 @@ export class UserListPageComponent {
   private computeFilteredUsers(): Signal<User[] | null> {
     const filteredUsers$ = combineLatest([
       toObservable(this.users),
-      toObservable(this.search)
+      toObservable(this.search),
     ]).pipe(
       debounceTime(200),
       tap(() => this.isLoading.set(true)),
@@ -131,16 +160,16 @@ export class UserListPageComponent {
 
         return this.userService.filterUsers(users, { search });
       }),
-      filter(users => users !== null),
+      filter((users) => users !== null),
       delay(100),
       catchError(() => {
         this.notification.error('Error', 'Users filtering failed');
 
-        return of(this.users())
+        return of(this.users());
       }),
       tap({
         next: () => this.isLoading.set(false),
-        error: () => this.isLoading.set(false)
+        error: () => this.isLoading.set(false),
       }),
     );
 

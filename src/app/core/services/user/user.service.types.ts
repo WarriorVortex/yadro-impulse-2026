@@ -1,7 +1,10 @@
-import {User} from '@app/models';
+import { User } from '@app/models';
 
 export interface FilterUsersParams {
-  search: string,
+  search: string;
 }
 
-export type UserFilterPredicate = (user: User, params: FilterUsersParams) => boolean;
+export type UserFilterPredicate = (
+  user: User,
+  params: FilterUsersParams,
+) => boolean;

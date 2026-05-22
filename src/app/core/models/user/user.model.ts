@@ -1,5 +1,5 @@
-import {Address} from '../address.model';
-import {Company} from '../company.model';
+import { Address } from '../address.model';
+import { Company } from '../company.model';
 
 export interface User {
   id: number;
