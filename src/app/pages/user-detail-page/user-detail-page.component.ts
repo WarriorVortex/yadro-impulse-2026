@@ -51,7 +51,6 @@ export class UserDetailPageComponent {
   protected isError = signal(false);
 
   protected readonly listRoute = USER_LIST_ROUTE;
-  protected readonly userIdParam = USER_ID_PARAM;
   protected readonly editRouteFn = getUserEditRoute;
 
   constructor() {
@@ -69,7 +68,7 @@ export class UserDetailPageComponent {
   private computeUserId(): Signal<number | null> {
     const userId$ = this.route.paramMap.pipe(
       map(params => {
-        const id = Number(params.get(this.userIdParam));
+        const id = Number(params.get(USER_ID_PARAM));
         return isNaN(id) ? null : id;
       })
     );

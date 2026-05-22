@@ -1,1 +1,185 @@
-<p>user-form-page works!</p>
+<div class="user-form-page">
+  <nz-card [nzBordered]="false" class="user-form-page__card">
+    <nz-page-header nzBackIcon class="user-form-page__header">
+      <ng-container nz-page-header-title>
+        <div class="form-title-row">
+          <nz-avatar
+            [nzText]="getAvatarLetter()"
+            nzSize="large"
+            class="form-avatar"
+          ></nz-avatar>
+          <div>
+            <h1 class="form-title">
+              {{ isEditMode() ? 'Edit User' : 'Create User' }}
+            </h1>
+            <span class="form-subtitle">
+              {{ isEditMode() ? 'Update user information' : 'Add a new user to the system' }}
+            </span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container nz-page-header-extra>
+        <a nz-button nzType="default" [routerLink]="listRoute">
+          <span nz-icon nzType="arrow-left"></span> Cancel
+        </a>
+      </ng-container>
+    </nz-page-header>
+
+    @if (isLoading()) {
+      <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 8 }"></nz-skeleton>
+    } @else if (isError()) {
+      <nz-empty nzNotFoundImage="simple" nzNotFoundContent="Failed to load user data"></nz-empty>
+    } @else {
+      <div class="form-container animate-fade">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+          <!-- Personal Information -->
+          <h3 class="section-title">
+            <span nz-icon nzType="user" nzTheme="outline"></span>
+            Personal Information
+          </h3>
+
+          <div class="form-row">
+            <nz-form-item class="form-item-half">
+              <nz-form-label nzRequired>Name</nz-form-label>
+              <nz-form-control [nzErrorTip]="nameError">
+                <input nz-input formControlName="name" placeholder="John Doe" />
+                <ng-template #nameError let-control>
+                  @if (control.hasError('required')) { Name is required }
+                  @if (control.hasError('minlength')) { Minimum length is 3 characters }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item-half">
+              <nz-form-label nzRequired>Username</nz-form-label>
+              <nz-form-control [nzErrorTip]="usernameError">
+                <input nz-input formControlName="username" placeholder="johndoe" />
+                <ng-template #usernameError let-control>
+                  @if (control.hasError('required')) { Username is required }
+                  @if (control.hasError('minlength')) { Minimum length is 3 characters }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Email</nz-form-label>
+            <nz-form-control [nzErrorTip]="emailError">
+              <input nz-input formControlName="email" type="email" placeholder="john@example.com" />
+              <ng-template #emailError let-control>
+                @if (control.hasError('required')) { Email is required }
+                @if (control.hasError('email')) { Please enter a valid email }
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div class="form-row">
+            <nz-form-item class="form-item-half">
+              <nz-form-label>Phone</nz-form-label>
+              <nz-form-control [nzErrorTip]="phoneError">
+                <input nz-input formControlName="phone" placeholder="+1 (555) 000-0000" />
+                <ng-template #phoneError let-control>
+                  @if (control.hasError('invalidPhone')) { Invalid phone number format }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item-half">
+              <nz-form-label>Website</nz-form-label>
+              <nz-form-control [nzErrorTip]="websiteError">
+                <input nz-input formControlName="website" placeholder="example.com" />
+                <ng-template #websiteError let-control>
+                  @if (control.hasError('invalidWebsite')) { Invalid website URL }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Address -->
+          <nz-divider nzText="Address" nzOrientation="left"></nz-divider>
+          <div formGroupName="address">
+            <div class="form-row">
+              <nz-form-item class="form-item-half">
+                <nz-form-label>Street</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="street" placeholder="123 Main St" />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="form-item-half">
+                <nz-form-label>Suite</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="suite" placeholder="Apt. 4" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="form-row">
+              <nz-form-item class="form-item-half">
+                <nz-form-label>City</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="city" placeholder="New York" />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="form-item-half">
+                <nz-form-label>Zipcode</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="zipcode" placeholder="10001" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div formGroupName="geo">
+              <div class="form-row">
+                <nz-form-item class="form-item-half">
+                  <nz-form-label>Latitude</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input formControlName="lat" placeholder="40.7128" />
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="form-item-half">
+                  <nz-form-label>Longitude</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input formControlName="lng" placeholder="-74.0060" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company -->
+          <nz-divider nzText="Company" nzOrientation="left"></nz-divider>
+          <div formGroupName="company">
+            <nz-form-item>
+              <nz-form-label>Company Name</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="name" placeholder="Acme Inc." />
+              </nz-form-control>
+            </nz-form-item>
+            <div class="form-row">
+              <nz-form-item class="form-item-half">
+                <nz-form-label>Catch Phrase</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="catchPhrase" placeholder="We do stuff" />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="form-item-half">
+                <nz-form-label>BS</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="bs" placeholder="synergize" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              nz-button
+              nzType="primary"
+              [nzLoading]="isSaving()"
+              [disabled]="form.invalid"
+              type="submit"
+            >
+              {{ isEditMode() ? 'Update' : 'Create' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }
+  </nz-card>
+</div>

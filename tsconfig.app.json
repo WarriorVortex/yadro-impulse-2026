@@ -15,7 +15,8 @@
       "@app/pipes": ["src/app/shared/pipes"],
       "@app/utils": ["src/app/core/utils"],
       "@app/services": ["src/app/core/services"],
-      "@app/components": ["src/app/shared/components"]
+      "@app/components": ["src/app/shared/components"],
+      "@app/validators": ["src/app/core/validators"]
     }
   },
   "include": [

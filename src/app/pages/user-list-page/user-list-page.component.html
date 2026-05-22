@@ -7,7 +7,7 @@
       class="user-list-page__header"
     >
       <ng-container nz-page-header-extra>
-        <a nz-button nzType="primary" [routerLink]="newUserRoute">
+        <a nz-button nzType="primary" [routerLink]="newUserRoute" [relativeTo]="null">
           <span nz-icon nzType="plus"></span>
           Add User
         </a>
@@ -44,7 +44,8 @@
           <tr class="user-list-page__row">
             <td class="col-user">
               <div class="user-cell">
-                <nz-avatar nzIcon="user" [nzText]="user.name.charAt(0)" nzSize="small"></nz-avatar>
+
+                <nz-avatar [nzText]="user.name.charAt(0)" nzSize="default"></nz-avatar>
                 <div class="user-info">
                   <a [routerLink]="detailRouteFn(user.id)" [relativeTo]="null">{{ user.name }}</a>
                   <span class="username">&#64;{{ user.username }}</span>
@@ -73,7 +74,7 @@
             <td [attr.colspan]="5" class="empty-cell">
               @if (!isLoading() && (filteredUsers()?.length === 0)) {
                 <nz-empty nzNotFoundImage="simple" nzNotFoundContent="No users found">
-                  <button nz-button nzType="primary" [routerLink]="newUserRoute">
+                  <button nz-button nzType="primary" [routerLink]="newUserRoute" [relativeTo]="null">
                     <span nz-icon nzType="plus"></span>
                     Create first user
                   </button>

@@ -99,14 +99,14 @@ export class UserListPageComponent {
 
         return throwError(() => err);
       }),
-      switchMap(this.loadUsers),
+      switchMap(() => this.loadUsers()),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe();
   }
 
   private loadUsers(): Observable<User[] | null> {
     return this.userService.getUsers().pipe(
-      tap(this.users.set),
+      tap(users => this.users.set(users)),
       catchError((err) => {
         this.notification.error('Error', 'Cannot load users');
         this.isLoading.set(false);
