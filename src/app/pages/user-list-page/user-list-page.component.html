@@ -46,7 +46,7 @@
               <div class="user-cell">
                 <nz-avatar nzIcon="user" [nzText]="user.name.charAt(0)" nzSize="small"></nz-avatar>
                 <div class="user-info">
-                  <a [routerLink]="detailRouteFn(user.id)">{{ user.name }}</a>
+                  <a [routerLink]="detailRouteFn(user.id)" [relativeTo]="null">{{ user.name }}</a>
                   <span class="username">&#64;{{ user.username }}</span>
                 </div>
               </div>
@@ -56,7 +56,7 @@
             <td class="col-company hidden-sm">{{ user.company.name }}</td>
             <td class="col-actions actions-cell">
               <nz-space [nzSize]="'middle'">
-                <a nz-button nzType="link" [routerLink]="editRouteFn(user.id)" nz-tooltip="Edit">
+                <a nz-button nzType="link" [routerLink]="editRouteFn(user.id)" [relativeTo]="null" nz-tooltip="Edit">
                   <span nz-icon nzType="edit"></span>
                   <span class="action-text">Edit</span>
                 </a>

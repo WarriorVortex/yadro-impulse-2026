@@ -1,1 +1,99 @@
-<p>user-detail-page works!</p>
+<div class="user-detail-page">
+  <nz-card [nzBordered]="false" class="user-detail-page__card">
+    <nz-page-header nzBackIcon class="user-detail-page__header">
+      <ng-container nz-page-header-title>
+        <div class="user-title-row">
+          <nz-avatar
+            [nzText]="user()?.name?.charAt(0)?.toUpperCase()"
+            nzSize="large"
+            class="user-avatar"
+          ></nz-avatar>
+          <div>
+            <h1 class="user-name">{{ user()?.name || 'User Details' }}</h1>
+            @if (user()) {
+              <span class="user-id">#{{ user()?.id }}</span>
+            }
+          </div>
+        </div>
+      </ng-container>
+      <ng-container nz-page-header-extra>
+        <nz-space>
+          <a *nzSpaceItem nz-button [routerLink]="editRouteFn(user()?.id!)" [relativeTo]="null" [disabled]="!user()">
+            <span nz-icon nzType="edit"></span> Edit
+          </a>
+          <a *nzSpaceItem nz-button nzType="default" [routerLink]="listRoute" [relativeTo]="null">
+            <span nz-icon nzType="arrow-left"></span> Back to List
+          </a>
+        </nz-space>
+      </ng-container>
+    </nz-page-header>
+
+    @if (isLoading()) {
+      <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    } @else if (isError() || !user()) {
+      <nz-empty nzNotFoundImage="simple" nzNotFoundContent="User not found or failed to load"></nz-empty>
+    } @else {
+      <div class="user-detail-content animate-fade">
+        <div class="info-section animate-slide-up">
+          <h3 class="section-title">
+            <span nz-icon nzType="user" nzTheme="outline"></span> Personal Information
+          </h3>
+          <nz-descriptions
+            nzBordered
+            [nzColumn]="{ xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 }"
+            nzSize="middle"
+          >
+            <nz-descriptions-item nzTitle="Username">
+              <span class="field-code">{{ user()?.username }}</span>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Email">
+              <a [href]="'mailto:' + user()?.email" class="field-link">{{ user()?.email }}</a>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Phone">
+              <strong>{{ user()?.phone }}</strong>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Website">
+              <a [href]="'https://' + user()?.website" target="_blank" class="field-link">{{ user()?.website }}</a>
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </div>
+
+        <div class="info-section animate-slide-up delay-1">
+          <h3 class="section-title">
+            <span nz-icon nzType="environment" nzTheme="outline"></span> Address
+          </h3>
+          <nz-descriptions nzBordered [nzColumn]="1" nzSize="middle">
+            <nz-descriptions-item nzTitle="Street">
+              <span class="field-mono">{{ user()?.address?.street }}</span>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Suite">{{ user()?.address?.suite }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="City">
+              <em>{{ user()?.address?.city }}</em>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Zipcode">{{ user()?.address?.zipcode }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Coordinates">
+              Lat: {{ user()?.address?.geo?.lat }}, Lng: {{ user()?.address?.geo?.lng }}
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </div>
+
+        <div class="info-section animate-slide-up delay-2">
+          <h3 class="section-title">
+            <span nz-icon nzType="bank" nzTheme="outline"></span> Company
+          </h3>
+          <nz-descriptions nzBordered [nzColumn]="1" nzSize="middle">
+            <nz-descriptions-item nzTitle="Name">
+              <strong>{{ user()?.company?.name }}</strong>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Catch Phrase">
+              <blockquote>{{ user()?.company?.catchPhrase }}</blockquote>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="BS">
+              <span class="field-code">{{ user()?.company?.bs }}</span>
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </div>
+      </div>
+    }
+  </nz-card>
+</div>
