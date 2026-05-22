@@ -13,7 +13,9 @@
       "@app/routes": ["src/app/app.routes.const.ts"],
       "@app/models": ["src/app/core/models"],
       "@app/pipes": ["src/app/shared/pipes"],
-      "@app/utils": ["src/app/core/utils"]
+      "@app/utils": ["src/app/core/utils"],
+      "@app/services": ["src/app/core/services"],
+      "@app/components": ["src/app/shared/components"]
     }
   },
   "include": [

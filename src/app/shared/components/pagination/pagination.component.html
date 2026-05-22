@@ -1,0 +1,15 @@
+<div class="pagination-container">
+  <nz-pagination
+    [nzTotal]="total()"
+    [(nzPageSize)]="pageSize"
+    [(nzPageIndex)]="pageIndex"
+    [nzShowSizeChanger]="showSizeChanger()"
+    [nzPageSizeOptions]="pageSizeOptions()"
+    [nzShowQuickJumper]="showQuickJumper()"
+    [nzHideOnSinglePage]="hideOnSinglePage()"
+    [nzShowTotal]="showTotal() ? totalTemplate : null"
+  ></nz-pagination>
+  <ng-template #totalTemplate let-total>
+    <span class="total-text">{{ totalLabel() }} {{ total }}</span>
+  </ng-template>
+</div>
